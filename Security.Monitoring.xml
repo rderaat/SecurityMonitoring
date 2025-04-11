@@ -1,48 +1,5 @@
-<ManagementPack ContentReadable="true" SchemaVersion="2.0" OriginalSchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-  <Manifest>
-    <Identity>
-      <ID>Security.Monitoring</ID>
-      <Version>1.0.8.58</Version>
-    </Identity>
-    <Name>Security Monitoring</Name>
-    <References>
-      <Reference Alias="SCDW">
-        <ID>Microsoft.SystemCenter.DataWarehouse.Library</ID>
-        <Version>7.0.8427.0</Version>
-        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
-      </Reference>
-      <Reference Alias="SystemCenter">
-        <ID>Microsoft.SystemCenter.Library</ID>
-        <Version>6.0.0.0</Version>
-        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
-      </Reference>
-      <Reference Alias="MSSL">
-        <ID>Microsoft.SystemCenter.ServiceDesigner.Library</ID>
-        <Version>7.0.8433.0</Version>
-        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
-      </Reference>
-      <Reference Alias="Windows">
-        <ID>Microsoft.Windows.Library</ID>
-        <Version>7.5.8501.0</Version>
-        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
-      </Reference>
-      <Reference Alias="Health">
-        <ID>System.Health.Library</ID>
-        <Version>7.0.8427.0</Version>
-        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
-      </Reference>
-      <Reference Alias="System">
-        <ID>System.Library</ID>
-        <Version>7.5.8501.0</Version>
-        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
-      </Reference>
-      <Reference Alias="WindowsEventCollectorDiscovery">
-        <ID>WindowsEventCollectorDiscovery</ID>
-        <Version>1.0.0.25</Version>
-        <PublicKeyToken>a6e03788df4b8847</PublicKeyToken>
-      </Reference>
-    </References>
-  </Manifest>
+<?xml version="1.0" encoding="utf-8"?>
+<ManagementPackFragment SchemaVersion="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <TypeDefinitions>
     <EntityTypes>
       <ClassTypes>
@@ -7867,15 +7824,32 @@ $discoveryData</ScriptBody>
                     </ValueExpression>
                   </SimpleExpression>
                 </Expression>
-                <Expression>
-                  <RegExExpression>
-                    <ValueExpression>
-                      <XPathQuery Type="String">EventDescription</XPathQuery>
-                    </ValueExpression>
-                    <Operator>ContainsSubstring</Operator>
-                    <Pattern>0x1F</Pattern>
-                  </RegExExpression>
-                </Expression>
+				  <Expression>
+				      <Or>
+					      <Expression>
+						      <SimpleExpression>
+							      <ValueExpression>
+								      <XPathQuery Type="String">Params/Param[6]</XPathQuery>
+							      </ValueExpression>
+							      <Operator>Equal</Operator>
+							      <ValueExpression>
+								      <Value Type="String">0x17</Value>
+							      </ValueExpression>
+						      </SimpleExpression>
+					      </Expression>
+					      <Expression>
+						      <SimpleExpression>
+							      <ValueExpression>
+								      <XPathQuery Type="String">Params/Param[6]</XPathQuery>
+							      </ValueExpression>
+							      <Operator>Equal</Operator>
+							      <ValueExpression>
+								      <Value Type="String">0x1F</Value>
+							      </ValueExpression>
+						      </SimpleExpression>
+					      </Expression>
+				        </Or>
+			    </Expression>
               </And>
             </Expression>
           </DataSource>
@@ -8503,24 +8477,28 @@ $discoveryData</ScriptBody>
                 </Expression>
                 <Expression>
                   <Or>
-                    <Expression>
-                      <RegExExpression>
-                        <ValueExpression>
-                          <XPathQuery Type="String">EventDescription</XPathQuery>
-                        </ValueExpression>
-                        <Operator>ContainsSubstring</Operator>
-                        <Pattern>0x1f</Pattern>
-                      </RegExExpression>
-                    </Expression>
-                    <Expression>
-                      <RegExExpression>
-                        <ValueExpression>
-                          <XPathQuery Type="String">EventDescription</XPathQuery>
-                        </ValueExpression>
-                        <Operator>ContainsSubstring</Operator>
-                        <Pattern>0x1F</Pattern>
-                      </RegExExpression>
-                    </Expression>
+					  <Expression>
+						  <SimpleExpression>
+							  <ValueExpression>
+								  <XPathQuery Type="String">Params/Param[6]</XPathQuery>
+							  </ValueExpression>
+							  <Operator>Equal</Operator>
+							  <ValueExpression>
+								  <Value Type="String">0x17</Value>
+							  </ValueExpression>
+						  </SimpleExpression>
+					  </Expression>
+					  <Expression>
+						  <SimpleExpression>
+							  <ValueExpression>
+								  <XPathQuery Type="String">Params/Param[6]</XPathQuery>
+							  </ValueExpression>
+							  <Operator>Equal</Operator>
+							  <ValueExpression>
+								  <Value Type="String">0x1F</Value>
+							  </ValueExpression>
+						  </SimpleExpression>
+					  </Expression>
                   </Or>
                 </Expression>
               </And>
@@ -14108,4 +14086,4 @@ Event Description: {2}</Description>
     <ReportResource ID="WDigestConnectionReport.ID" Accessibility="Internal" FileName="Wdigest.rdl" HasNullStream="false" MIMEType="application/octet-stream" />
     <ReportResource ID="LegacyTLSConnectionReport.ID" Accessibility="Internal" FileName="LegacyTLS.rdl" HasNullStream="false" MIMEType="application/octet-stream" />
   </Resources>
-</ManagementPack>
+</ManagementPackFragment>
